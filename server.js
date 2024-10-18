@@ -42,7 +42,7 @@ app.post("/create-Account", function (req, resp) {
     const email = req.body.someEmail;
 
     // Check if the email already exists
-    dbCon.query("SELECT email FROM mechswap.register WHERE email = ?", [email], function (err, results) {
+    dbCon.query("SELECT email FROM sql12738818.register WHERE email = ?", [email], function (err, results) {
         if (err) {
             console.error("Error checking email existence:", err);
             return resp.status(500).send("Server error occurred");
@@ -54,7 +54,7 @@ app.post("/create-Account", function (req, resp) {
 
         // Insert new user
         dbCon.query(
-            "INSERT INTO mechswap.register (email, pwd, name, company_name, company_details, address, country, state, city, isd, number, dos, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_DATE(), 1)",
+            "INSERT INTO sql12738818.register (email, pwd, name, company_name, company_details, address, country, state, city, isd, number, dos, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_DATE(), 1)",
             [
                 email,
                 req.body.somePwd,
@@ -120,7 +120,7 @@ app.post("/forgot-Account", function (req, resp) {
     const lowerCaseEmail = email.toLowerCase();
 
     // Check if the email already exists (case-insensitive)
-    dbCon.query("SELECT email, pwd, name FROM mechswap.register WHERE LOWER(email) = ?", [lowerCaseEmail], function (err, results) {
+    dbCon.query("SELECT email, pwd, name FROM sql12738818.register WHERE LOWER(email) = ?", [lowerCaseEmail], function (err, results) {
         if (err) {
             console.error("Error checking email existence:", err);
             return resp.status(500).send("Server error occurred");
@@ -174,7 +174,7 @@ app.post("/forgot-Account", function (req, resp) {
 // ====================== Log In =====================
 app.get("/do-login", function (req, resp) {
     dbCon.query(
-        "SELECT * FROM mechswap.register WHERE email = ? AND pwd = ?",
+        "SELECT * FROM sql12738818.register WHERE email = ? AND pwd = ?",
         [req.query.someEmail, req.query.somePwd],
         function (err, resultJSONTable) {
             if (err) {
@@ -203,7 +203,7 @@ app.get("/do-login", function (req, resp) {
 // ====================== Fetch User Data =====================
 app.get("/json-record", function (req, resp) {
     dbCon.query(
-        "SELECT * FROM mechswap.register WHERE email = ?",
+        "SELECT * FROM sql12738818.register WHERE email = ?",
         [req.query.kuchemail],
         function (err, resultJSONKuch) {
             if (err) {
@@ -218,7 +218,7 @@ app.get("/json-record", function (req, resp) {
 app.post("/update-user", function (req, resp) {
     const { email, companyName, companyDetail, userName, userAddress, userCountry, userState, userCity, userISD, userMobile } = req.body;
 
-    const query = `UPDATE mechswap.register SET company_name = ?, company_details = ?, name = ?, address = ?, country = ?, state = ?, city = ?, isd = ?, number = ? WHERE email = ?`;
+    const query = `UPDATE sql12738818.register SET company_name = ?, company_details = ?, name = ?, address = ?, country = ?, state = ?, city = ?, isd = ?, number = ? WHERE email = ?`;
     const values = [companyName, companyDetail, userName, userAddress, userCountry, userState, userCity, userISD, userMobile, email];
 
     dbCon.query(query, values, function (err) {
@@ -234,7 +234,7 @@ app.post("/update-user", function (req, resp) {
 app.post("/change-password", function (req, resp) {
     const { currentPassword, newPassword, UserUserEmail } = req.body;
 
-    dbCon.query("SELECT pwd FROM mechswap.register WHERE email = ?", [UserUserEmail], function (err, result) {
+    dbCon.query("SELECT pwd FROM sql12738818.register WHERE email = ?", [UserUserEmail], function (err, result) {
         if (err) {
             console.error(err);
             return resp.status(500).send("Server error");
@@ -248,7 +248,7 @@ app.post("/change-password", function (req, resp) {
             return resp.status(401).send("Current password is incorrect");
         }
 
-        dbCon.query("UPDATE mechswap.register SET pwd = ? WHERE email = ?", [newPassword, UserUserEmail], function (err) {
+        dbCon.query("UPDATE sql12738818.register SET pwd = ? WHERE email = ?", [newPassword, UserUserEmail], function (err) {
             if (err) {
                 console.error(err);
                 return resp.status(500).send("Server error");
@@ -455,7 +455,7 @@ app.get("/get-angular-user-records", function (req, resp) {
     // console.log(req.query);
     var email = req.query.email;
 
-    var query = "select * from mechswap.register  where email=? ";
+    var query = "select * from sql12738818.register  where email=? ";
 
 
     dbCon.query(query, [email], function (err, resultTable) {
@@ -470,7 +470,7 @@ app.get("/get-angular-user-records", function (req, resp) {
 //================
 app.get("/productUser-record", function (req, resp) {
     dbCon.query(
-        "SELECT * FROM mechswap.register WHERE email = ?",
+        "SELECT * FROM sql12738818.register WHERE email = ?",
         [req.query.someemail],
         function (err, resultJSONKuch) {
             if (err) {
@@ -486,7 +486,7 @@ app.post("/buyer-Account", function (req, resp) {
     console.log(req.body.somebuyerEmail);
     const email = req.body.somebuyerEmail;
     dbCon.query(
-        "INSERT INTO mechswap.buyer (buyer_productID, buyer_email, buyer_name, buyer_address, buyer_country, buyer_state, buyer_city, buyer_ISD, buyer_number, buyer_dos) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_DATE())",
+        "INSERT INTO sql12738818.buyer (buyer_productID, buyer_email, buyer_name, buyer_address, buyer_country, buyer_state, buyer_city, buyer_ISD, buyer_number, buyer_dos) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_DATE())",
         [
 
             req.body.somebuyerProductID,
