@@ -349,7 +349,7 @@ app.get("/get-angular-all-records", function (req, resp) {
         return resp.status(400).send("Email is required.");
     }
 
-    dbCon.query("SELECT * FROM mechswap.products WHERE email = ?", [email], function (err, resultTableJSON) {
+    dbCon.query("SELECT * FROM sql12738818.products WHERE email = ?", [email], function (err, resultTableJSON) {
         if (err == null) {
             resp.send(resultTableJSON);
         } else {
@@ -365,7 +365,7 @@ app.get("/do-angular-remove", function (req, resp) {
 
 
     //fixed                             //same seq. as in table
-    dbCon.query("delete from mechswap.products where productID=?", [productID], function (err, result) {
+    dbCon.query("delete from sql12738818.products where productID=?", [productID], function (err, result) {
         if (err == null) {
             if (result.affectedRows == 1)
                 resp.send("Product Removed Successfully!!");
@@ -383,7 +383,7 @@ app.get('/product-status', (req, res) => {
 
     const query = `
         SELECT COUNT(*) AS totalPosted
-        FROM mechswap.products
+        FROM sql12738818.products
         WHERE email = ?
     `;
 
@@ -403,7 +403,7 @@ app.get("/get-angular-buyer-records", function (req, resp) {
     // Fetch product records grouped by category and sub_category
     dbCon.query(`
       SELECT category, sub_category, COUNT(*) as count 
-      FROM mechswap.products 
+      FROM sql12738818.products 
       GROUP BY category, sub_category;`,
         function (err, resultTableJSON) {
             if (err == null)
@@ -421,7 +421,7 @@ app.get("/get-angular-variety-records", function (req, resp) {
     var sub_category = req.query.sub_category;
     var category = req.query.category;
 
-    var query = "select * from mechswap.products  where sub_category=? and category=?";
+    var query = "select * from sql12738818.products  where sub_category=? and category=?";
 
 
     dbCon.query(query, [sub_category, category], function (err, resultTable) {
@@ -438,7 +438,7 @@ app.get("/get-angular-product-records", function (req, resp) {
     // console.log(req.query);
     var productID = req.query.productID;
 
-    var query = "select * from mechswap.products  where productID=? ";
+    var query = "select * from sql12738818.products  where productID=? ";
 
 
     dbCon.query(query, [productID], function (err, resultTable) {
