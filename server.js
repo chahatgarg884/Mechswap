@@ -36,6 +36,10 @@ app.use(fileuploader());
 app.get("/", function (req, resp) {
     resp.sendFile(path.join(process.cwd(), "public", "index.html"));
 });
+app.get('/buyer', (req, res) => {
+    res.sendFile(__dirname + '/buyer.html');
+});
+
 
 // ====================== Sign Up =====================
 app.post("/create-Account", function (req, resp) {
